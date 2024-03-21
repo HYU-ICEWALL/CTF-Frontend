@@ -1,5 +1,5 @@
-import '../styles/Login.css';
 import { useState } from 'react';
+import Form from '../components/Form.tsx';
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -17,13 +17,12 @@ function Login() {
     return (
         <>
             <div>
-                <form action="submit" method="post">
-                    {/* <h3>Login</h3> */}
+                <Form>
                     <label htmlFor="username">아이디</label><input type="text" name="username" id="username" value={username} onChange={onUsernameChange} />
                     <label htmlFor="password">패스워드</label><input type="password" name="password" id="password" value={password} onChange={onPasswordChange} />
                     <input type="submit" value="로그인" />
                     <a href="/">Forgot Password?</a>
-                </form>
+                </Form>
 
             </div>
         </>
