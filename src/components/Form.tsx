@@ -1,12 +1,11 @@
-import '../styles/Form.css';
+import "../styles/Form.css";
 
 function Form(props: any) {
-
   return (
     <>
-        <form action="/api/login" method="post">
-            {props.children}
-        </form>
+      <form action="/api/login" method="post">
+        {props.children}
+      </form>
     </>
   );
 }
