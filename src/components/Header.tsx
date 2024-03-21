@@ -1,19 +1,19 @@
-import { Component } from "react";
+import '../styles/Header.css';
+import Logo from '../assets/logo.png';
 
-class Header extends Component {
-    render() {
-        return (
-        <div>
+function Header() {
+    return (
+        <>
             <nav>
                 <ul>
-                    <li>home</li>
-                    <li>problems</li>
-                    <li>scoreboard</li>
+                    <img src={Logo}></img>
+                    <a href="/"><li>Home</li></a>
+                    <a href="/scoreboard"><li>Scoreboard</li></a>
+                    <a href="/problems"><li>Problems</li></a>
                 </ul>
             </nav>
-        </div>
-        );
-    }
+        </>
+    );
 }
 
 export default Header;
