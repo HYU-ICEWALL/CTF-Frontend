@@ -12,6 +12,7 @@ import { useState } from 'react';
 import Header from './components/Header.tsx';
 import Footer from './components/Footer.tsx';
 import NotFound from './pages/NotFound.tsx';
+import Register from './pages/Register.tsx';
 
 function App() {
   const [username, setUsername] = useState('');
@@ -25,6 +26,7 @@ function App() {
           <Route path="/scoreboard" element={<Scoreboard />} />
           <Route path="/problems" element={<Problems />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
