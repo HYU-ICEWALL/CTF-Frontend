@@ -12,6 +12,7 @@ import Header from "./components/Header.tsx";
 import Footer from "./components/Footer.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Register from "./pages/Register.tsx";
+import Admin from "./pages/Admin.tsx";
 
 function App() {
   const [username, setUsername] = useState("");
@@ -21,6 +22,7 @@ function App() {
       <Header username={username} setUsername={setUsername} />
       <BrowserRouter>
         <Routes>
+          <Route path="/admin" element={<Admin adminToken="DummyToken"/>} />
           <Route path="/" element={<Home />} />
           <Route path="/scoreboard" element={<Scoreboard />} />
           <Route path="/problems" element={<Problems />} />
