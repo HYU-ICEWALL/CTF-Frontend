@@ -5,10 +5,16 @@ import { BrowserRouter } from 'react-router-dom';
 import Home from './pages/Home.tsx';
 import Scoreboard from './pages/Scoreboard.tsx';
 import Problems from './pages/Problems.tsx';
+import { useState } from 'react';
+import Header from './components/Header.tsx';
+import Footer from './components/Footer.tsx';
 
 function App() {
+  const [username, setUsername] = useState('');
+
   return (
     <>
+      <Header username={username} setUsername={setUsername}/>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -16,6 +22,7 @@ function App() {
           <Route path="/problems" element={<Problems />} />
         </Routes>
       </BrowserRouter>
+      <Footer />
     </>
   )
 }
