@@ -1,6 +1,10 @@
 import "../styles/Form.css";
 
-function Form(props: any) {
+interface FormProps {
+  children: React.ReactNode;
+}
+
+function Form(props: FormProps) {
   return (
     <>
       <form action="/api/login" method="post">
