@@ -25,36 +25,24 @@ function Header(props: HeaderProps) {
             <li>Submissions</li>
           </a>
           <div className="padding"></div>
-          <a
+
+          {(props.username === "Guest" ? <><a
             href="/login"
-            style={
-              props.username === ""
-                ? { display: "inline" }
-                : { display: "none" }
-            }
           >
             <li>Login</li>
-          </a>
-          <a
+          </a></> : <></>)}
+
+          {(props.username === "Guest" ? <><a
             href="/register"
-            style={
-              props.username === ""
-                ? { display: "inline" }
-                : { display: "none" }
-            }
           >
             <li>Register</li>
-          </a>
-          <a
+          </a></> : <></>)}
+
+          {(props.username === "Guest" ? <></> : <><a
             href="/logout"
-            style={
-              props.username === ""
-                ? { display: "none" }
-                : { display: "inline" }
-            }
           >
             <li>Logout</li>
-          </a>
+          </a></>)}
         </ul>
       </nav>
     </>
