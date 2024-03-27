@@ -15,17 +15,17 @@ import Register from "./pages/Register.tsx";
 import Admin from "./pages/Admin.tsx";
 
 function App() {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState("Guest");
 
   return (
     <>
       <Header username={username} setUsername={setUsername} />
       <BrowserRouter>
         <Routes>
-          <Route path="/admin" element={<Admin adminToken="DummyToken"/>} />
+          <Route path="/admin" element={<Admin adminToken="DummyToken" />} />
           <Route path="/" element={<Home />} />
           <Route path="/scoreboard" element={<Scoreboard />} />
-          <Route path="/problems" element={<Problems />} />
+          <Route path="/problems" element={<Problems username={username} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
