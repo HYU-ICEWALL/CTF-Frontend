@@ -14,20 +14,23 @@ import NotFound from "./pages/NotFound.tsx";
 import Register from "./pages/Register.tsx";
 import Admin from "./pages/Admin.tsx";
 
+import LoginStub from "./stubs/LoginStub.tsx";
+
 function App() {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(document.cookie.includes("session") ? "User" : "Guest");
 
   return (
     <>
       <Header username={username} setUsername={setUsername} />
       <BrowserRouter>
         <Routes>
-          <Route path="/admin" element={<Admin adminToken="DummyToken"/>} />
+          <Route path="/admin" element={<Admin adminToken="DummyToken" />} />
           <Route path="/" element={<Home />} />
           <Route path="/scoreboard" element={<Scoreboard />} />
-          <Route path="/problems" element={<Problems />} />
+          <Route path="/problems" element={<Problems username={username} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login-stub" element={<LoginStub />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -25,6 +25,7 @@ function Login() {
             id="username"
             value={username}
             onChange={onUsernameChange}
+            required
           />
           <label htmlFor="password">패스워드</label>
           <input
@@ -33,6 +34,7 @@ function Login() {
             id="password"
             value={password}
             onChange={onPasswordChange}
+            required
           />
           <input type="submit" value="로그인" />
           <a href="/">Forgot Password?</a>
