@@ -7,7 +7,6 @@ import Scoreboard from "./pages/Scoreboard.tsx";
 import Problems from "./pages/Problems.tsx";
 import Login from "./pages/Login.tsx";
 
-import { useState } from "react";
 import Header from "./components/Header.tsx";
 import Footer from "./components/Footer.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -17,17 +16,15 @@ import Admin from "./pages/Admin.tsx";
 import LoginStub from "./stubs/LoginStub.tsx";
 
 function App() {
-  const [username, setUsername] = useState(document.cookie.includes("session") ? "User" : "Guest");
-
   return (
     <>
-      <Header username={username} setUsername={setUsername} />
+      <Header/>
       <BrowserRouter>
         <Routes>
           <Route path="/admin" element={<Admin adminToken="DummyToken" />} />
           <Route path="/" element={<Home />} />
           <Route path="/scoreboard" element={<Scoreboard />} />
-          <Route path="/problems" element={<Problems username={username} />} />
+          <Route path="/problems" element={<Problems/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login-stub" element={<LoginStub />} />

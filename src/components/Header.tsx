@@ -1,12 +1,8 @@
 import "../styles/Header.css";
 import Logo from "../assets/logo.png";
 
-interface HeaderProps {
-  username: string;
-  setUsername: (username: string) => void;
-}
-
-function Header(props: HeaderProps) {
+function Header() {
+  const username = "Guest";
   return (
     <>
       <nav>
@@ -26,23 +22,35 @@ function Header(props: HeaderProps) {
           </a>
           <div className="padding"></div>
 
-          {(props.username === "Guest" ? <><a
-            href="/login"
-          >
-            <li>Login</li>
-          </a></> : <></>)}
+          {username === "Guest" ? (
+            <>
+              <a href="/login">
+                <li>Login</li>
+              </a>
+            </>
+          ) : (
+            <></>
+          )}
 
-          {(props.username === "Guest" ? <><a
-            href="/register"
-          >
-            <li>Register</li>
-          </a></> : <></>)}
+          {username === "Guest" ? (
+            <>
+              <a href="/register">
+                <li>Register</li>
+              </a>
+            </>
+          ) : (
+            <></>
+          )}
 
-          {(props.username === "Guest" ? <></> : <><a
-            href="/logout"
-          >
-            <li>Logout</li>
-          </a></>)}
+          {username === "Guest" ? (
+            <></>
+          ) : (
+            <>
+              <a href="/logout">
+                <li>Logout</li>
+              </a>
+            </>
+          )}
         </ul>
       </nav>
     </>

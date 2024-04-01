@@ -1,19 +1,17 @@
-interface ProblemsProps {
-  username: string;
-}
+import Auth from "../hoc/Auth.tsx";
 
-function Problems({ username }: ProblemsProps) {
+function Problems() {
   // change to what I shared with lake later
-  return <>(
-    {(username === "Guest" ?
-      <div>
-        <p>인증된 사용자만 이용 가능합니다. 로그인 후 이용해 주세요</p>
-      </div> :
-      <div>
-        <p>문제 목록</p>
-      </div>)}
-    )
-  </>
+
+  return (
+    <>
+      <Auth>
+        <div>
+          <p>문제 목록</p>
+        </div>
+      </Auth>
+    </>
+  );
 }
 
 export default Problems;
