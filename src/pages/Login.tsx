@@ -14,10 +14,39 @@ function Login() {
     setPassword(e.target.value);
   };
 
+  const submitHandler: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+
+    const id = username;
+
+    fetch("https://server.icewall.org/api/account/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+        password,
+      }),
+    })
+    .then((res) => {
+      if (res.ok) {
+        alert("로그인에 성공했습니다.");
+        window.location.href = "/";
+      } else {
+        alert("로그인에 실패했습니다.");
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      alert("로그인에 실패했습니다.");
+    });
+  }
+
   return (
     <>
       <div>
-        <Form>
+        <Form submitHandler={submitHandler}>
           <label htmlFor="username">아이디</label>
           <input
             type="text"

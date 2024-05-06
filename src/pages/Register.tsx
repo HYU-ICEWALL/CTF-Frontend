@@ -23,10 +23,45 @@ function Register() {
     setEmail(e.target.value);
   };
 
+  const submitHandler: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    if (password !== passwordConfirm) {
+      alert("패스워드가 일치하지 않습니다.");
+      return;
+    }
+
+    const id = username;
+
+    fetch("https://server.icewall.org/api/account/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+        password,
+        email,
+      }),
+    })
+    .then((res) => {
+      console.log(res);
+      if (res.ok) {
+        alert("회원가입에 성공했습니다.");
+        window.location.href = "/login";
+      } else {
+        alert("회원가입에 실패했습니다.");
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+        alert("회원가입에 실패했습니다.");
+      });
+  };
+
   return (
     <>
       <div>
-        <Form>
+        <Form submitHandler={submitHandler}>
           <label htmlFor="username">아이디</label>
           <input
             required
@@ -63,7 +98,7 @@ function Register() {
             value={email}
             onChange={onEmailChange}
           />
-          <input type="submit" value="등록" />
+          <input type="submit" value="등록"/>
         </Form>
       </div>
     </>
