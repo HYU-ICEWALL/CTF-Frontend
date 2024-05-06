@@ -32,7 +32,7 @@ function Register() {
 
     const id = username;
 
-    fetch("http://server.icewall.org:9999/api/account/register", {
+    fetch("https://server.icewall.org/api/account/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

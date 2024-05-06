@@ -22,7 +22,7 @@ function Login(props: LoginProp) {
   const submitHandler: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
-    fetch("http://server.icewall.org:9999/api/account/login", {
+    fetch("https://server.icewall.org/api/account/login", {
       method: "POST",
       credentials: "include",
       headers: {
