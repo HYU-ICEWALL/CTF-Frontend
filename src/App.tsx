@@ -14,8 +14,6 @@ import NotFound from "./pages/NotFound.tsx";
 import Register from "./pages/Register.tsx";
 import Admin from "./pages/Admin.tsx";
 
-import LoginStub from "./stubs/LoginStub.tsx";
-
 function App() {
   const [username, setUsername] = useState(document.cookie.includes("session") ? "User" : "Guest");
 
@@ -28,9 +26,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/scoreboard" element={<Scoreboard />} />
           <Route path="/problems" element={<Problems username={username} />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login username={username} setUsername={setUsername}/>} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login-stub" element={<LoginStub />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
