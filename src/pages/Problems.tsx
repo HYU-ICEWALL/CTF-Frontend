@@ -1,19 +1,22 @@
+import Auth from '../middleware/Auth.tsx';
+
 interface ProblemsProps {
   username: string;
 }
 
 function Problems({ username }: ProblemsProps) {
-  // change to what I shared with lake later
-  return <>(
-    {(username === "Guest" ?
-      <div>
-        <p>인증된 사용자만 이용 가능합니다. 로그인 후 이용해 주세요</p>
-      </div> :
-      <div>
-        <p>문제 목록</p>
-      </div>)}
-    )
-  </>
+  const problemList = () => {
+    return <div>
+      <h1>문제 목록</h1>
+      <ul>
+        <li>문제 1</li>
+        <li>문제 2</li>
+        <li>문제 3</li>
+      </ul>
+    </div>
+  }
+
+  return <Auth username={username}> {problemList()}</Auth>;
 }
 
 export default Problems;
