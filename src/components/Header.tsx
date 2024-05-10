@@ -1,12 +1,14 @@
 import "../styles/Header.css";
 import Logo from "../assets/logo.png";
+import { useState } from "react";
 
-interface HeaderProps {
-  username: string;
-  setUsername: (username: string) => void;
-}
+function Header() {
+  const [loggedIn, setLoggedIn] = useState(false);
 
-function Header(props: HeaderProps) {
+  if(document.cookie.includes("sid") && loggedIn === false) {
+    setLoggedIn(true);
+  }
+
   return (
     <>
       <nav>
@@ -26,19 +28,19 @@ function Header(props: HeaderProps) {
           </a>
           <div className="padding"></div>
 
-          {(props.username === "Guest" ? <><a
+          {(loggedIn === false ? <><a
             href="/login"
           >
             <li>Login</li>
           </a></> : <></>)}
 
-          {(props.username === "Guest" ? <><a
+          {(loggedIn === false ? <><a
             href="/register"
           >
             <li>Register</li>
           </a></> : <></>)}
 
-          {(props.username === "Guest" ? <></> : <><a
+          {(loggedIn === false ? <></> : <><a
             href="/logout"
           >
             <li>Logout</li>

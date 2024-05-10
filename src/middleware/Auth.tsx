@@ -1,11 +1,9 @@
 interface AuthProps {
   children: React.ReactNode;
-  username: string;
 }
 
 function Auth(props: AuthProps) {
-  console.log(props.username);
-  if(props.username === "Guest") {
+  if(!document.cookie.includes("sid")) {
       window.location.href = "/login";
       return null;
   }

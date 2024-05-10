@@ -1,12 +1,7 @@
 import { useState } from "react";
 import Form from "../components/Form.tsx";
 
-interface LoginProp {
-  username: string;
-  setUsername: (username: string) => void;
-}
-
-function Login(props: LoginProp) {
+function Login() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,7 +17,7 @@ function Login(props: LoginProp) {
   const submitHandler: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
 
-    fetch("https://server.icewall.org/api/account/login", {
+    fetch("/api/account/login", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -36,8 +31,8 @@ function Login(props: LoginProp) {
     .then((res) => {
       if (res.ok) {
         alert("로그인에 성공했습니다.");
-        props.setUsername(id);
-        
+        document.cookie = "sid=1; path=/;"
+        window.location.href = "/";
       } else {
         alert("로그인에 실패했습니다.");
       }
