@@ -23,9 +23,6 @@
     width: 220px;
     height: 100px;
     display: inline-block;
-    .modal {
-        display: none;
-    }
     .score {
         font-size: 0.5em;
         font-weight: bold;

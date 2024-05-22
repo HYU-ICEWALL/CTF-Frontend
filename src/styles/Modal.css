@@ -1,0 +1,26 @@
+.modal {
+    display: none;
+    width: 600px;
+    min-height: 200px;
+    height: auto;
+    margin: auto;
+    z-index: 1;
+
+    background-color: #333;
+    border: 1px solid #222;
+    border-radius: 10px;
+
+    button {
+        right: 0;
+        bottom: 0;
+        margin: 10px;
+    }
+}
+
+.wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+}
