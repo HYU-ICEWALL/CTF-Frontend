@@ -9,6 +9,7 @@ function Auth(props: AuthProps) {
 
   fetch("/api/account/auth", {
     method: "GET",
+    mode: "cors",
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",

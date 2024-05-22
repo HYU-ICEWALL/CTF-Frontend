@@ -7,8 +7,11 @@ function Header() {
 
   fetch("https://server.icewall.org/api/account/auth", {
     method: "GET",
+    mode: "cors",
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": "true", // Add this line
     },
     credentials: "include",
   }).then((res) => {
