@@ -5,9 +5,22 @@ import { useState } from "react";
 function Header() {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  if(document.cookie.includes("sid") && loggedIn === false) {
-    setLoggedIn(true);
-  }
+  fetch("https://server.icewall.org/api/account/auth", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  }).then((res) => {
+    res.json().then((data) => {
+      console.log(data);
+      if (data["code"] === 0) {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
+    });
+  });
 
   return (
     <>

@@ -6,6 +6,9 @@ function Register() {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [email, setEmail] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [organization, setOrganization] = useState("");
+  const [department, setDepartment] = useState("");
 
   const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -23,6 +26,18 @@ function Register() {
     setEmail(e.target.value);
   };
 
+  const onNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+  };
+
+  const onOrganizationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setOrganization(e.target.value);
+  };
+
+  const onDepartmentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDepartment(e.target.value);
+  };
+
   const submitHandler: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     if (password !== passwordConfirm) {
@@ -31,8 +46,9 @@ function Register() {
     }
 
     const id = username;
+    const name = nickname;
 
-    fetch("https://server.icewall.org/api/account/register", {
+    fetch("https://server.icewall.org/api/account/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,13 +57,22 @@ function Register() {
         id,
         password,
         email,
+        name,
+        organization,
+        department,
       }),
     })
     .then((res) => {
       console.log(res);
       if (res.ok) {
-        alert("회원가입에 성공했습니다.");
-        window.location.href = "/login";
+        res.json().then((data) => {
+          if(data["code"] === 0){
+            alert("회원가입에 성공했습니다.");
+            window.location.href = "/login";
+          } else {
+            alert("회원가입에 실패했습니다.\n" + data["message"]);
+          }
+        });
       } else {
         alert("회원가입에 실패했습니다.");
       }
@@ -70,6 +95,15 @@ function Register() {
             id="username"
             value={username}
             onChange={onUsernameChange}
+          />
+          <label htmlFor="nickname">닉네임</label>
+          <input
+            required
+            type="text"
+            name="nickname"
+            id="nickname"
+            value={nickname}
+            onChange={onNicknameChange}
           />
           <label htmlFor="password">패스워드</label>
           <input
@@ -97,6 +131,25 @@ function Register() {
             id="email"
             value={email}
             onChange={onEmailChange}
+          />
+
+          <label htmlFor="organization">소속</label>
+          <input
+            required
+            type="text"
+            name="organization"
+            id="organization"
+            value={organization}
+            onChange={onOrganizationChange}
+          />
+          <label htmlFor="department">학과</label>
+          <input
+            required
+            type="text"
+            name="department"
+            id="department"
+            value={department}
+            onChange={onDepartmentChange}
           />
           <input type="submit" value="등록"/>
         </Form>

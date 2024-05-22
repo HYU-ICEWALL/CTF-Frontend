@@ -1,0 +1,35 @@
+.problemlist {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.problems {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+    justify-content: left;
+    width: 100%;
+
+}
+
+.problem {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+    width: 220px;
+    height: 100px;
+    display: inline-block;
+    .score {
+        font-size: 0.5em;
+        font-weight: bold;
+    
+    }
+}
+
+.problem:hover {
+    background-color: #444;
+}

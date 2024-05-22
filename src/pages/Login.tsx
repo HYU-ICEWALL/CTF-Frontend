@@ -30,9 +30,15 @@ function Login() {
     })
     .then((res) => {
       if (res.ok) {
-        alert("로그인에 성공했습니다.");
-        document.cookie = "sid=1; path=/;"
-        window.location.href = "/";
+        res.json().then((data) => {
+          if(data["code"] === 0){
+            alert("로그인에 성공했습니다.");
+            window.location.href = "/";
+          } else {
+            alert("로그인에 실패했습니다.\n" + data["message"]);
+          }
+        });
+
       } else {
         alert("로그인에 실패했습니다.");
       }
