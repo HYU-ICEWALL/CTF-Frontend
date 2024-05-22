@@ -12,6 +12,7 @@ function Auth(props: AuthProps) {
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": "true", // Add this line
     },
     credentials: "include",
   }).then((res) => {
