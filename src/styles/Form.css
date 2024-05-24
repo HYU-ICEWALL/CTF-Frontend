@@ -1,71 +1,76 @@
 /* Login.css */
 
 /* Container */
-div {
+.form-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 80vh;
-}
 
-/* Form */
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  border: 1px solid #444444;
-  border-radius: 7px;
-  background-color: #222;
-  color: #fff; /* Added */
-}
 
-/* Labels */
-label {
-  margin-bottom: 10px;
-  font-weight: bold;
-}
+  /* Form */
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #444444;
+    border-radius: 7px;
+    background-color: #222;
+    color: #fff;
+    /* Added */
+  }
 
-/* Input fields */
-input[type="text"],
-input[type="password"],
-input[type="email"] {
-  width: 250px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #676767;
-  border-radius: 5px;
-  background-color: #333; /* Added */
-  color: #fff; /* Added */
-}
+  /* Labels */
+  label {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
 
-/* Submit button */
-input[type="submit"] {
-  margin-top: 20px;
-  width: 250px;
-  padding: 10px;
-  background-color: #3897f0;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+  /* Input fields */
+  input[type="text"],
+  input[type="password"],
+  input[type="email"] {
+    width: 250px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #676767;
+    border-radius: 5px;
+    background-color: #333;
+    /* Added */
+    color: #fff;
+    /* Added */
+  }
 
-/* Submit button hover effect */
-input[type="submit"]:hover {
-  background-color: #3366cc;
-}
+  /* Submit button */
+  input[type="submit"] {
+    margin-top: 20px;
+    width: 250px;
+    padding: 10px;
+    background-color: #3897f0;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 
-label {
-  padding-left: 10px;
-  width: 100%;
-  text-align: left;
-  font-size: small;
-}
+  /* Submit button hover effect */
+  input[type="submit"]:hover {
+    background-color: #3366cc;
+  }
 
-form a {
-  text-decoration: none;
-  color: #2887e0 !important;
-  font-size: small;
-  margin-top: 10px;
+  label {
+    padding-left: 10px;
+    width: 100%;
+    text-align: left;
+    font-size: small;
+  }
+
+  form a {
+    text-decoration: none;
+    color: #2887e0 !important;
+    font-size: small;
+    margin-top: 10px;
+  }
+
 }

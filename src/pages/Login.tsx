@@ -51,7 +51,7 @@ function Login() {
 
   return (
     <>
-      <div>
+      <div className="form-container">
         <Form submitHandler={submitHandler}>
           <label htmlFor="username">아이디</label>
           <input
