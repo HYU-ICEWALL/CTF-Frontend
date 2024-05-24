@@ -1,109 +1,49 @@
 import axios from 'axios';
 import Auth from '../middleware/Auth.tsx';
-import Modal from '../components/Modal.tsx';
 import "../styles/Problems.css";
-
+import Problem from '../components/Problem.tsx';
+import { ReactNode, useState } from 'react';
 
 function Problems() {
-  const problemList = () => {
-    axios.get("http://server.icewall.org:9999/api/problem?contest=0")
-    .then((res) => {
-      console.log(res);
-    });
-    
-    let category = ['Web', 'Pwn', 'Reversing', 'Forensic', 'Misc'];
+  const [problems, setProblems] = useState([] as ReactNode[]);
+  const [fetched, setFetched] = useState(false);
 
-    // sample data
-    const data = [
-      {
-        "_id" : 1123,         // Id created from mongo DB
-        "id": 1,             // Problem id
-        "name" : "A+B",          // Problem name
-        "description": "what is A+B",    // Problem description
-        "source" : "www.naver.com",           // Problem source (download)
-        "link" : "www.instagram.com",          // Problem link (ex. web, pwn)
-        "score" : "1000",          // Problem score
-        "category" : 0       // 0 : Web, 1 : Pwn, 2 : Reversing, 3 : Forensic, 4 : Misc...
+  if(fetched === false){
+    fetch("/api/problem", {
+      method: "GET",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": "true", // Add this line
       },
-      {
-        "_id" : 1223,         // Id created from mongo DB
-        "id": 2,             // Problem id
-        "name" : "A-B",          // Problem name
-        "description": "what is A-B",    // Problem description
-        "source" : "www.naver.com",           // Problem source (download)
-        "link" : "www.instagram.com",          // Problem link (ex. web, pwn)
-        "score" : "1000",          // Problem score
-        "category" : 0       // 0 : Web, 1 : Pwn, 2 : Reversing, 3 : Forensic, 4 : Misc...
-      },
-      {
-        "_id" : 1223,         // Id created from mongo DB
-        "id": 3,             // Problem id
-        "name" : "A*B",          // Problem name
-        "description": "what is A-B",    // Problem description
-        "source" : "www.naver.com",           // Problem source (download)
-        "link" : "www.instagram.com",          // Problem link (ex. web, pwn)
-        "score" : "1000",          // Problem score
-        "category" : 0       // 0 : Web, 1 : Pwn, 2 : Reversing, 3 : Forensic, 4 : Misc...
-      },
-      {
-        "_id" : 1223,         // Id created from mongo DB
-        "id": 4,             // Problem id
-        "name" : "A/B",          // Problem name
-        "description": "what is A-B",    // Problem description
-        "source" : "www.naver.com",           // Problem source (download)
-        "link" : "www.instagram.com",          // Problem link (ex. web, pwn)
-        "score" : "1000",          // Problem score
-        "category" : 1       // 0 : Web, 1 : Pwn, 2 : Reversing, 3 : Forensic, 4 : Misc...
-      }
-    ]
-
-    const clickHandler = (e : any) => {
-      let modal = e.currentTarget.querySelector('.modal');
-      modal.style.display = 'block';
-    }
-
-    const Problems = function(){
-      let children = [];
-      for(let i = 0; i < 4; i++){
-        
-        let child = data.filter((problem) => problem.category === i)
-        .map((problem) => {
-            return <div className='problem' onClick={clickHandler}>
-              <h2>{problem.name}</h2>
-              <Modal>
-                <p>{problem.description}</p>
-                <a href={problem.source}>source</a>
-                <a href={problem.link}>link</a>
-              </Modal>
-              <p className='score'>{problem.score}</p>
-            </div>
-        });
-        if(child.length == 0) continue;
-        
-        children.push(
-          <h3>{category[i]}</h3>
-        );
-        children.push(
-          <div className='problems'>
-            {
-              child
-            }
-          </div>
-        );
-      }
+      credentials: "include",
+    }).then((res) => res.json())
+    .then((data) => {
+        data = data["data"];
+        let ret = [];
+        for(let i = 0; i < data.length; i++){
+          ret.push(<Problem 
+              name={data[i].name}
+              description={data[i].description}
+              source={data[i].source}
+              link={data[i].link}
+              score={data[i].score}
+            ></Problem>);
+        }
+        console.log(data);
+        setProblems(ret);
+      });
       
-      return children;
-    }
-
-    return <div className='problemlist'>
-      <h1>문제 목록</h1>
-      {
-        Problems()
-      }
-    </div>
+      setFetched(true);
   }
 
-  return <Auth> {problemList()}</Auth>;
+  return <Auth>{
+      <div className="problems">
+        {problems}
+      </div>
+  }
+  </Auth>;
 }
 
 export default Problems;
