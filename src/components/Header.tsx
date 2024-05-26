@@ -5,6 +5,10 @@ import { useState } from "react";
 function Header() {
   const [loggedIn, setLoggedIn] = useState(false);
 
+  if(loggedIn == false && localStorage.getItem("token") !== null) {
+    setLoggedIn(true);
+  }
+
   fetch("https://server.icewall.org/api/account/auth", {
     method: "GET",
     mode: "cors",
@@ -19,8 +23,10 @@ function Header() {
       console.log(data);
       if (data["code"] === 0) {
         setLoggedIn(true);
+        localStorage.setItem("token", data["token"]);
       } else {
         setLoggedIn(false);
+        localStorage.removeItem("token");
       }
     });
   });

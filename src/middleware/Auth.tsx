@@ -18,9 +18,12 @@ function Auth(props: AuthProps) {
     credentials: "include",
   }).then((res) => {
     res.json().then((data) => {
-      if (true || data["code"] === 0) {
+      if (data["code"] === 0) {
         setIsAuth(true);
+        localStorage.setItem("token", data["token"]);
       } else {
+        setIsAuth(false);
+        localStorage.removeItem("token");
         document.cookie = "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
         window.location.href = "/login";
