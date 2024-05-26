@@ -35,7 +35,7 @@ function Login() {
             alert("로그인에 성공했습니다.");
             window.location.href = "/";
           } else {
-            alert("로그인에 실패했습니다.\n" + data["message"]);
+            alert("로그인에 실패했습니다.");
           }
         });
 
