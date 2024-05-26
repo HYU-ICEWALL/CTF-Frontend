@@ -1,0 +1,12 @@
+.scoreboard {
+    background-color: #2c2c2c;
+    border-radius: 10px;
+    padding: 10px;
+    border: 2px solid #202020;
+    width: 35vw;
+    height: 30vh;
+    margin: 0 auto;
+}
+.scoreboard:hover {
+    border: 2px solid #111111;
+}
