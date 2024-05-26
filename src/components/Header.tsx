@@ -5,7 +5,7 @@ import { useState } from "react";
 function Header() {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  if(loggedIn == false && localStorage.getItem("token") !== null) {
+  if(loggedIn == false && document.cookie.includes("loggedin=true")) {
     setLoggedIn(true);
   }
 
@@ -23,10 +23,11 @@ function Header() {
       console.log(data);
       if (data["code"] === 0) {
         setLoggedIn(true);
-        localStorage.setItem("token", data["token"]);
       } else {
         setLoggedIn(false);
-        localStorage.removeItem("token");
+        document.cookie = "loggedin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+        document.cookie = "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
       }
     });
   });
