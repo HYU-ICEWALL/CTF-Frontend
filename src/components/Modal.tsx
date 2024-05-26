@@ -16,11 +16,12 @@ function Modal(props : ModalProps) {
     <div className="wrapper" hidden={props.hidden}>
         <div className="modal">
             {props.children}
-            <form>
-                <input type="text" placeholder="답안을 입력하세요"></input>
-                <button>제출</button>
-            </form>
+
             <div className="buttonwrapper">
+                <form>
+                    <input type="text" placeholder="답안을 입력하세요"></input>
+                    <button>제출</button>
+                </form>
                 <button onClick={clickHandler}>닫기</button>
             </div>
         </div>

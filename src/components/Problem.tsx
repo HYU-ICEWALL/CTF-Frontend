@@ -25,6 +25,7 @@ function Problem(props : ProblemProps) {
         </div>
 
         <Modal hidden={hidden} setHidden={setHidden}>
+            <h2>{props.name}</h2>
               <p>{props.description}</p>
               <p>
               <a href={props.source}>source</a>
