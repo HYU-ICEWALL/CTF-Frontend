@@ -33,6 +33,7 @@ function Login() {
         res.json().then((data) => {
           if(data["code"] === 0){
             alert("로그인에 성공했습니다.");
+            document.cookie = "loggedin=true; path=/;"
             window.location.href = "/";
           } else {
             alert("로그인에 실패했습니다.");
