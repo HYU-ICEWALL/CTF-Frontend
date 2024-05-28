@@ -17,14 +17,21 @@ function Problem(props : ProblemProps) {
     setHidden(false);
   }
 
+  const keyDownHandler = (e: any) => {
+    if(e.key === "Escape"){
+        setHidden(true);
+    }
+}
+
   return (
     <>
+      <div tabIndex={-1} onKeyDown={keyDownHandler}>
         <div className='problem' onClick={clickHandler}>
             <h2>{props.name}</h2>
             <p className='score'>{props.score}</p>
         </div>
 
-        <Modal hidden={hidden} setHidden={setHidden}>
+        <Modal hidden={hidden} setHidden={setHidden} submitLink={"/api/contest/submit?"} probName={props.name}>
             <h2>{props.name}</h2>
               <p>{props.description}</p>
               <p>
@@ -34,6 +41,7 @@ function Problem(props : ProblemProps) {
               <a href={props.link}>link</a>
               </p>
         </Modal>
+      </div>
     </>
   );
 }
