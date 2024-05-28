@@ -9,7 +9,8 @@ function Problems() {
   const [fetched, setFetched] = useState(false);
 
   if(fetched === false){
-    fetch("/api/problem", {
+    setFetched(true);
+    fetch("/api/contest/recent", {
       method: "GET",
       mode: "cors",
       headers: {
@@ -19,23 +20,33 @@ function Problems() {
       },
       credentials: "include",
     }).then((res) => res.json())
-    .then((data) => {
-        data = data["data"];
-        let ret = [];
-        for(let i = 0; i < data.length; i++){
-          ret.push(<Problem 
-              name={data[i].name}
-              description={data[i].description}
-              source={data[i].source}
-              link={data[i].link}
-              score={data[i].score}
-            ></Problem>);
-        }
-        console.log(data);
-        setProblems(ret);
+    .then((data) => data["data"]["recent"])
+    .then((recent) => {
+      fetch("/api/problem?data=" + recent, {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": "true", // Add this line
+        },
+        credentials: "include",
+      }).then((res) => res.json())
+      .then((data) => {
+          data = data["data"];
+          let ret = [];
+          for(let i = 0; i < data.length; i++){
+            ret.push(<Problem 
+                name={data[i].name}
+                description={data[i].description}
+                source={data[i].source}
+                link={data[i].link}
+                score={data[i].score}
+              ></Problem>);
+          }
+          setProblems(ret);
+        });
       });
-      
-      setFetched(true);
   }
 
   return <Auth>{
