@@ -36,6 +36,7 @@ function Scoreboard() {
         credentials: "include",
       }).then((res) => res.json())
       .then((data) => {
+        console.log(data);
         return data;
       });
     }).then((data) => {
