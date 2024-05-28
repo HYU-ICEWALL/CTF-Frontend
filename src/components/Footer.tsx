@@ -10,8 +10,8 @@ function Footer() {
           }
         }>
         <p>ICEWALL © 2024</p>
-        <p>Frontend design and development by @ingyu_1008</p>
-        <p>Backend development by @joo_mj24</p>
+        <p>Frontend design and development by @ingyu1008</p>
+        <p>Backend development by @raipier8818</p>
       </footer>
     </>
   );
