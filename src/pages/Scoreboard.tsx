@@ -59,28 +59,6 @@ function Scoreboard() {
 
   const newTheme = createTheme({ palette: { mode: "dark" } });
 
-  // return <>
-  //         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-  //         <div className="scoreboard">
-  //           <ThemeProvider theme={newTheme}>
-  //           <LineChart
-  //             xAxis={[{ data: [1, 2, 3, 5, 8, 10]}]}
-  //             series={[
-  //               {
-  //                 data: [1, 3, 5, 7, 9 , 11],
-  //               },
-  //               {
-  //                 data: [0, 0, 1, 1, 3, 6],
-  //               },
-  //               {
-  //                 data: [0, 2, 5, 8, 8, 10],
-  //               },
-  //             ]}
-  //           />
-  //           </ThemeProvider>
-  //         </div>
-  //       </>;
-
   return <Auth>{
     <>
       <div className="scoreboard">
