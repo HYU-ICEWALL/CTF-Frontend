@@ -37,7 +37,9 @@ function Scoreboard() {
         credentials: "include",
       }).then((res) => res.json())
       .then((data) => {
-        return data["data"][0]["submissions"];
+        let contestdata = data["data"];
+        console.log(contestdata);
+        return contestdata[0]["submissions"];
       })
       .then((submissions) => {
         let accounts = submissions.map((submission: any) => {
