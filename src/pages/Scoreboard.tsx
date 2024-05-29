@@ -46,7 +46,7 @@ function Scoreboard() {
           return submission["account"];
         });
         let timestamps = submissions.map((submission: any) => {
-          return (new Date(submission["timestamp"])).getMilliseconds();
+          return (new Date(submission["timestamp"])).getTime();
         });
   
         console.log(accounts);
