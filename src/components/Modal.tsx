@@ -36,7 +36,7 @@ const submitHandler = (e : any) => {
     })
     .then((response) => response.json())
     .then((data) => {
-        if (data.result === true) {
+        if (data["data"].result === true) {
             alert("정답입니다!");
             props.setHidden(true);
         } else {
