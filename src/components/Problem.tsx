@@ -31,7 +31,7 @@ function Problem(props : ProblemProps) {
             <p className='score'>{props.score}</p>
         </div>
 
-        <Modal hidden={hidden} setHidden={setHidden} submitLink={"/api/contest/submit?"} probName={props.name}>
+        <Modal hidden={hidden} setHidden={setHidden} submitLink={"/api/problem/submit?"} probName={props.name}>
             <h2>{props.name}</h2>
               <p>{props.description}</p>
               <p>
