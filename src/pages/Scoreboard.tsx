@@ -64,6 +64,9 @@ function Scoreboard() {
       let timestamps = submissions.map((submission: any) => {
         return (new Date(submission["timestamp"])).getMilliseconds();
       });
+
+      console.log(accounts);
+      console.log(timestamps);
       
       setXAxis(timestamps);
 
@@ -82,6 +85,8 @@ function Scoreboard() {
           data.data.push(cumulative);
         }
       }
+
+      console.log(series);
 
       setSeries(series);
       
