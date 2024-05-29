@@ -37,61 +37,42 @@ function Scoreboard() {
         credentials: "include",
       }).then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        return data;
-      });
-    }).then((data) => {
-      console.log(data);
-    });
-
-    fetch("/api/contest/scoreboard", {
-      method: "GET",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": "true", // Add this line
-      },
-      credentials: "include",
-    }).then((res) => res.json())
-    .then((data) => {
-      return data["data"][0]["submissions"];
-    })
-    .then((submissions) => {
-      let accounts = submissions.map((submission: any) => {
-        return submission["account"];
-      });
-      let timestamps = submissions.map((submission: any) => {
-        return (new Date(submission["timestamp"])).getMilliseconds();
-      });
-
-      console.log(accounts);
-      console.log(timestamps);
-      
-      setXAxis(timestamps);
-
-      let series = [] as any[];
-      
-      for(let i = 0; i < accounts.length; i++){
-        let data = {
-          data: [] as Number[],
-        }
-        let cumulative = 0;
-        let account = accounts[i];
-        for(let j = 0; j < submissions.length; j++){
-          if(submissions[j]["account"] === account){
-            cumulative += submissions[j]["score"];
+        return data["data"][0]["submissions"];
+      })
+      .then((submissions) => {
+        let accounts = submissions.map((submission: any) => {
+          return submission["account"];
+        });
+        let timestamps = submissions.map((submission: any) => {
+          return (new Date(submission["timestamp"])).getMilliseconds();
+        });
+  
+        console.log(accounts);
+        console.log(timestamps);
+        
+        setXAxis(timestamps);
+  
+        let series = [] as any[];
+        
+        for(let i = 0; i < accounts.length; i++){
+          let data = {
+            data: [] as Number[],
           }
-          data.data.push(cumulative);
+          let cumulative = 0;
+          let account = accounts[i];
+          for(let j = 0; j < submissions.length; j++){
+            if(submissions[j]["account"] === account){
+              cumulative += submissions[j]["score"];
+            }
+            data.data.push(cumulative);
+          }
         }
-      }
-
-      console.log(series);
-
-      setSeries(series);
-      
-
-    })
+  
+        console.log(series);
+  
+        setSeries(series);
+      });
+    });
   }
 
   const newTheme = createTheme({ palette: { mode: "dark" } });
