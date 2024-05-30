@@ -52,9 +52,6 @@ function Header() {
           <a href="/problems">
             <li>Problems</li>
           </a>
-          <a href="/submissions">
-            <li>Submissions</li>
-          </a>
           <div className="padding"></div>
 
           {(loggedIn === false ? <><a
