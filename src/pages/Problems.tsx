@@ -22,7 +22,7 @@ function Problems() {
     }).then((res) => res.json())
     .then((data) => data["data"]["recent"])
     .then((recent) => {
-      fetch("/api/problem?data=" + recent, {
+      fetch("/api/problem?name=" + recent, {
         method: "GET",
         mode: "cors",
         headers: {
