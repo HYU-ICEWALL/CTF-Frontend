@@ -38,36 +38,36 @@ function Scoreboard() {
       }).then((res) => res.json())
       .then((data) => {
         let contestdata = data["data"];
-        console.log(contestdata);
-        return contestdata[0]["submissions"];
+        return contestdata["submissions"];
       })
-      .then((submissions) => {
+      .then((data) => {
+        let submissions = data["submissions"];
         let accounts = submissions.map((submission: any) => {
           return submission["account"];
         });
-        let timestamps = submissions.map((submission: any) => {
-          return (new Date(submission["timestamp"])).getTime();
+
+        let timestamps = submissions[0]["timestamps"].map((timestamp: any) => {
+          return new Date(timestamp["time"]).getTime() - new Date(data["begin_at"]).getTime();
+          // TODO Parse Time
         });
-  
-        console.log(accounts);
-        console.log(timestamps);
         
         setXAxis(timestamps);
+
+        console.log(accounts);
+        console.log(timestamps);
   
         let series = [] as any[];
         
         for(let i = 0; i < accounts.length; i++){
-          let data = {
-            data: [] as Number[],
-          }
-          let cumulative = 0;
-          let account = accounts[i];
-          for(let j = 0; j < submissions.length; j++){
-            if(submissions[j]["account"] === account){
-              cumulative += submissions[j]["score"];
-            }
-            data.data.push(cumulative);
-          }
+          let data = submissions[i]["timestamps"].map((timestamp: any) => {
+            return timestamp["score"];
+          });
+
+          console.log(data);
+  
+          series.push({
+            data: data,
+          });
         }
   
         console.log(series);
