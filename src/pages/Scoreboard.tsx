@@ -38,7 +38,7 @@ function Scoreboard() {
       }).then((res) => res.json())
       .then((data) => {
         let contestdata = data["data"];
-        return contestdata["submissions"];
+        return contestdata;
       })
       .then((data) => {
         let submissions = data["submissions"];
