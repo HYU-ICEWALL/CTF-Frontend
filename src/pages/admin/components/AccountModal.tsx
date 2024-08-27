@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { register } from "../middlewares/user/account.middleware.ts";
-import { CreateAccountDto } from "../dto/account.dto.ts";
-import { useNavigate } from "react-router-dom";
-import "../styles/Form.css";
+import { CreateAccountDto } from "../../../dto/account.dto";
+import { createManagerAccount } from "../../../middlewares/admin/account.middleware";
 
-function Register() {
+export interface ModalProps {
+  visible: boolean;
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function AccountModal(modalProps: ModalProps) {
   const [account, setAccount] = useState<CreateAccountDto>({
     username: "",
     password: "",
@@ -12,18 +15,22 @@ function Register() {
     email: "",
   });
 
-  const navigate = useNavigate();
-
   const { username, password, confirmPassword, email } = account;
-
+  
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    register(account).then(() => {
-      alert("회원가입이 완료되었습니다.");
-      navigate("/");
+    createManagerAccount(account).then(() => {
+      alert("계정이 생성되었습니다.");
+      modalProps.setVisible(false);
+      setAccount({
+        username: "",
+        password: "",
+        confirmPassword: "",
+        email: "",
+      });
     }).catch((err) => {
       console.log(err);
-      alert("회원가입에 실패했습니다. 관리자에게 문의하세요.");
+      alert("계정 생성에 실패했습니다.");
     });
   };
 
@@ -36,7 +43,7 @@ function Register() {
   };
 
   return (
-    <>
+    <div className="modal" hidden={!modalProps.visible}>
       <div className="form-container">
         <form onSubmit={submitHandler}>
           <label htmlFor="username">아이디</label>
@@ -60,7 +67,7 @@ function Register() {
           <label htmlFor="confirmPassword">패스워드 확인</label>
           <input
             required
-            type="text"
+            type="password"
             name="confirmPassword"
             id="confirmPassword"
             value={confirmPassword}
@@ -75,11 +82,14 @@ function Register() {
             value={email}
             onChange={onChange}
           />
-          <input type="submit" value="등록"/>
+          <input type="submit" value="등록" />
+          <button 
+            onClick={() => {modalProps.setVisible(false)}}
+          >취소</button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 
-export default Register;
+export default AccountModal;

@@ -1,59 +1,46 @@
-import { useState } from "react";
-import Form from "../components/Form.tsx";
+import { useContext, useState } from "react";
+import { checkAuth, login } from "../middlewares/user/auth.middleware.ts";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/auth.context.ts";
+import "../styles/Form.css";
 
 function Login() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { setAuth } = useContext(AuthContext);
 
   const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
-    console.log(e.target.value);
   };
 
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const submitHandler: React.FormEventHandler<HTMLFormElement> = (e) => {
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    fetch("/api/account/login", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id,
-        password,
-      }),
-    })
-    .then((res) => {
-      if (res.ok) {
-        res.json().then((data) => {
-          if(data["code"] === 0){
-            alert("로그인에 성공했습니다.");
-            document.cookie = "loggedin=true; path=/;"
-            window.location.href = "/";
-          } else {
-            alert("로그인에 실패했습니다.");
-          }
-        });
-
-      } else {
-        alert("로그인에 실패했습니다.");
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      alert("로그인에 실패했습니다.");
+    
+    await login({
+      username: id,
+      password: password,
+    }).then(() => {
+      checkAuth().then((res) => {
+        setAuth(res);
+        navigate("/", { replace: true });
+      }).catch(() => {
+        alert("로그인에 실패했습니다. 관리자에게 문의하세요.");
+        setAuth(undefined);
+      });
+    }).catch(() => {
+      alert("로그인에 실패했습니다. 아이디와 패스워드를 확인하세요.");
     });
   }
 
   return (
     <>
       <div className="form-container">
-        <Form submitHandler={submitHandler}>
+        <form onSubmit={submitHandler}>
           <label htmlFor="username">아이디</label>
           <input
             type="text"
@@ -74,7 +61,7 @@ function Login() {
           />
           <input type="submit" value="로그인" />
           <a href="/">Forgot Password?</a>
-        </Form>
+        </form>
       </div>
     </>
   );

@@ -1,76 +1,72 @@
+import { useContext } from "react";
 import "../styles/Header.css";
-import Logo from "../assets/logo.png";
-import { useState } from "react";
+import { logout } from "../middlewares/user/auth.middleware";
+import { AuthContext } from "../contexts/auth.context";
+import { Link } from "react-router-dom";
 
 function Header() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [fetched, setFetched] = useState(false);
+  const { auth, setAuth } = useContext(AuthContext);
 
-  if(loggedIn == false && document.cookie.includes("loggedin=true")) {
-    setLoggedIn(true);
-  }
-
-  if(fetched == false) {
-    setFetched(true);
-    fetch("https://server.icewall.org/api/account/auth", {
-      method: "GET",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": "true", // Add this line
-      },
-      credentials: "include",
-    }).then((res) => {
-      res.json().then((data) => {
-        console.log(data);
-        if (data["code"] === 0) {
-          setLoggedIn(true);
-        } else {
-          setLoggedIn(false);
-          document.cookie = "loggedin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-          document.cookie = "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-          document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-        }
-      });
+  const logoutHandler = () => {
+    logout().finally(() => {
+      setAuth(undefined);
+      window.location.href = "/";
     });
-  }
-
+  };
   
-
   return (
     <>
       <nav>
         <ul>
           {/* <img src={Logo}></img> */}
-          <a href="/">
+          <Link to="/">
             <li>Home</li>
-          </a>
-          <a href="/scoreboard">
-            <li>Scoreboard</li>
-          </a>
-          <a href="/problems">
-            <li>Problems</li>
-          </a>
+          </Link>
+          {
+            (auth?.role === "user") ? 
+            <Link to="/contests">
+              <li>Contests</li>
+            </Link> : <></>
+          }
+          {
+            (auth?.role === "admin") ?
+            <Link to="/admin">
+              <li>Admin</li>
+            </Link> : <></>
+          }
+          {
+            (auth?.role === "manager") ?
+            <Link to="/manager">
+              <li>Manager</li>
+            </Link> : <></>
+          }
           <div className="padding"></div>
 
-          {(loggedIn === false ? <><a
-            href="/login"
+          {(auth === undefined ? <><Link
+            to="/login"
           >
             <li>Login</li>
-          </a></> : <></>)}
+          </Link></> : <></>)}
 
-          {(loggedIn === false ? <><a
-            href="/register"
+          {(auth === undefined ? <><Link
+            to="/register"
           >
             <li>Register</li>
-          </a></> : <></>)}
+          </Link></> : <></>)}
 
-          {(loggedIn === false ? <></> : <><a
-            href="/logout"
+          {(auth === undefined ? <></> : <><Link
+            to="/profile"
+            style={{ cursor: "pointer" }}
+          >
+            <li>Profile</li>
+          </Link>
+          <Link to="/"
+            onClick={logoutHandler}
+            style={{ cursor: "pointer" }}
           >
             <li>Logout</li>
-          </a></>)}
+          </Link>
+          </>)}
         </ul>
       </nav>
     </>
