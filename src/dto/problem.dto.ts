@@ -17,9 +17,19 @@ export interface CreateProblemDto {
   flag: string;
 }
 
+export interface UpdateProblemDto {
+  name: string;
+  description: string;
+  flag: string;
+  uri: string;
+  score: number;
+  domain: ProblemDomain;
+  difficulty: ProblemDifficulty;
+  status: ProblemStatus;
+}
 
-
-export type SortOrder = "asc" | "desc";
+export type ProblemSortType = "name" | "domain" | "difficulty";
+export type ProblemSortOrder = "asc" | "desc";
 
 export interface ProblemConditions {
   name?: string;
@@ -27,8 +37,8 @@ export interface ProblemConditions {
   difficulty?: ProblemDifficulty;
   page: number;
   limit: number;
-  sort?: string;
-  order: SortOrder;
+  sort?: ProblemSortType;
+  order: ProblemSortOrder;
 };
 
 export interface ProblemHeaderResponseDto {
@@ -56,5 +66,3 @@ export interface ProblemPageResponseDto {
   page: number;
   limit: number;
 }
-
-export type SortType = "name" | "domain" | "difficulty";

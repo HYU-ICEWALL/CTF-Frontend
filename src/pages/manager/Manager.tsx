@@ -3,8 +3,8 @@ import { AuthResponseDto } from "../../dto/auth.dto";
 import { useEffect, useState } from "react";
 import { checkAuth } from "../../middlewares/user/auth.middleware";
 import Container from "../../components/Container";
-import Problem from "./components/Problem";
-import Contest from "./components/Contest";
+import ProblemManager from "./components/ProblemManager";
+import ContestManager from "./components/ContestManager";
 
 function Manager() {
   const navigate = useNavigate();
@@ -17,7 +17,9 @@ function Manager() {
         return;
       }
       setAuth(res);
-    }).catch(() => {
+    }).catch((err) => {
+      console.log(err);
+      alert(err.message);
       navigate("/", { replace: true });
     });
   }, []);
@@ -25,10 +27,10 @@ function Manager() {
   return (
     <Container children={[
       {
-        "Contest" : <Contest />
+        "Contest" : <ContestManager />
       },
       {
-        "Problem" : <Problem />
+        "Problem" : <ProblemManager />
       }
     ]}/>
   );

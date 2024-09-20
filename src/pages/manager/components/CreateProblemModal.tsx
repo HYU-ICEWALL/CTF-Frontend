@@ -1,70 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { CreateProblemDto, ProblemResponseDto } from "../../../dto/problem.dto";
-import { createProblem, updateProblem } from "../../../middlewares/manager/problem.middleware";
+import React, { useState } from "react";
+import { CreateProblemDto, ProblemDifficultyArr, ProblemDomainArr } from "../../../dto/problem.dto";
+import { createProblem as createContest } from "../../../middlewares/manager/problem.middleware";
 
 
 interface ModalProps {
   setHidden: React.Dispatch<React.SetStateAction<boolean>>;
-  initProblem: ProblemResponseDto | null;
+  refresh: () => void;
 }
 
-function ProblemModal(props: ModalProps) {
+function CreateContestModal(props: ModalProps) {
   const [problem, setProblem] = useState<CreateProblemDto>({
     name: "",
     description: "",
-    difficulty: "",
+    difficulty: ProblemDifficultyArr[0],
     score: 0,
-    domain: "",
+    domain: ProblemDomainArr[0],
     uri: "",
     flag: "",
   });
 
-  useEffect(() => {
-    if(props.initProblem) {
-      setProblem({
-        name: props.initProblem.name,
-        description: props.initProblem.description,
-        difficulty: props.initProblem.difficulty,
-        score: props.initProblem.score,
-        domain: props.initProblem.domain,
-        uri: props.initProblem.uri,
-        flag: props.initProblem.flag,
-      });
-    }
-  }, []);
-
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(!props.initProblem) {
-      createProblem(problem).then(() => {
-        alert("문제가 생성되었습니다.");
-        setProblem({
-          name: "",
-          description: "",
-          difficulty: "",
-          score: 0,
-          domain: "",
-          uri: "",
-          flag: "",
-        });
-        props.setHidden(true);
-      }).catch((err) => {
-        console.log(err);
-        alert("문제 생성에 실패했습니다.");
-      });
-    } else{
-      updateProblem(props.initProblem._id, problem).then(() => {
-        alert("문제가 수정되었습니다.");
-        props.setHidden(true);
-      }).catch((err) => {
-        console.log(err);
-        alert("문제 수정에 실패했습니다.");
-      });
-    }
+    problem.score = parseInt(problem.score.toString());
+
+    createContest(problem).then(() => {
+      alert("문제 생성에 성공했습니다.");
+      props.setHidden(true);
+      props.refresh();
+    }).catch((err) => {
+      console.log(err);
+      alert("문제 생성에 실패했습니다.");
+    });
   }
 
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setProblem({
       ...problem,
@@ -72,7 +41,7 @@ function ProblemModal(props: ModalProps) {
     });
   };
 
-  const { name, description, difficulty, score, domain, uri } = problem;
+  const { name, description, score, uri } = problem;
 
 
   return (
@@ -97,32 +66,36 @@ function ProblemModal(props: ModalProps) {
           onChange={onChange}
         />
         <label htmlFor="difficulty">난이도</label>
-        <input
-          required
-          type="text"
+        <select
           name="difficulty"
           id="difficulty"
-          value={difficulty}
           onChange={onChange}
-        />
+          value={problem.difficulty}
+        >
+          {ProblemDifficultyArr.map((difficulty) => (
+            <option key={difficulty} value={difficulty}>{difficulty}</option>
+          ))}
+        </select>
         <label htmlFor="score">점수</label>
         <input
           required
-          type="text"
+          type="number"
           name="score"
           id="score"
           value={score}
           onChange={onChange}
         />
         <label htmlFor="domain">도메인</label>
-        <input
-          required
-          type="text"
+        <select
           name="domain"
           id="domain"
-          value={domain}
           onChange={onChange}
-        />
+          value={problem.domain}
+        >
+          {ProblemDomainArr.map((domain) => (
+            <option key={domain} value={domain}>{domain}</option>
+          ))}
+        </select>
         <label htmlFor="uri">URI</label>
         <input
           required
@@ -150,4 +123,4 @@ function ProblemModal(props: ModalProps) {
   );
 }
 
-export default ProblemModal;
+export default CreateContestModal;

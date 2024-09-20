@@ -29,6 +29,8 @@
   }
 
   /* Input fields */
+  select,
+  input[type="number"],
   input[type="text"],
   input[type="password"],
   input[type="email"] {

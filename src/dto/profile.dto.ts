@@ -14,3 +14,18 @@ export interface UpdateProfileDto {
   organization: string;
   department: string;
 }
+
+
+export interface ProfileHeaderResponseDto {
+  _id: string;
+  name: string;
+}
+
+export interface ProfileInfoResponseDto extends ProfileHeaderResponseDto {
+  organization: string;
+  department: string;
+}
+
+export interface ProfileResponseDto extends ProfileInfoResponseDto {
+  account: string;
+}

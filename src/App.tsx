@@ -17,6 +17,7 @@ import Manager from "./pages/manager/Manager.tsx";
 import { checkAuth } from "./middlewares/user/auth.middleware.ts";
 import Contest from "./pages/Contest.tsx";
 import { AuthResponseDto } from "./dto/auth.dto.ts";
+import ContestProblem from "./pages/ContestProblem.tsx";
 
 function App() {
   const [auth, setAuth] = useState<AuthResponseDto | undefined>(undefined);
@@ -30,9 +31,6 @@ function App() {
     });
   }, []);
 
-  console.log(auth);
-  
-
   return (
     <BrowserRouter>
       <AuthContext.Provider value={{auth, setAuth}}>
@@ -42,7 +40,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/contests" element={<ContestList />} />
-            <Route path="/contest/:contest" element={<Contest />} />
+            <Route path="/contest/:id" element={<Contest />} />
+            <Route path="/contest/:id/:problemId" element={<ContestProblem />} />
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
@@ -63,7 +62,7 @@ function App() {
             <Route path="*" element={<Login />} />
           </Routes>
         }
-        <Footer />
+        {/* <Footer /> */}
       </AuthContext.Provider>
     </BrowserRouter>
   );

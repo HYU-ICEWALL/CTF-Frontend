@@ -1,35 +1,50 @@
-import React, { useState } from "react";
-import { CreateContestDto } from "../../../dto/contest.dto";
-import { createContest } from "../../../middlewares/manager/contest.middleware";
+import React, { useEffect, useState } from "react";
+import { ContestStatusArr, UpdateContestDto } from "../../../dto/contest.dto";
+import { getContestById, updateContest } from "../../../middlewares/manager/contest.middleware";
+import { dateToString } from "../../../scripts/date";
 
 interface ModalProps {
   setHidden: React.Dispatch<React.SetStateAction<boolean>>;
   refresh: () => void;
+  initContestId: string;
 }
 
-function CreateContestModal(props: ModalProps) {
-  const [contest, setContest] = useState<CreateContestDto>({
+function UpdateContestModal(props: ModalProps) {
+  const [contest, setContest] = useState<UpdateContestDto>({
     name: "",
     description: "",
     endTime: "",
     startTime: "",
+    status: "PENDING",
   });
+
+  useEffect(() => {
+    getContestById(props.initContestId).then((contestResponseDto) => {
+      setContest({
+        name: contestResponseDto.name,
+        description: contestResponseDto.description,
+        startTime: dateToString(contestResponseDto.startTime),
+        endTime: dateToString(contestResponseDto.endTime),
+        status: contestResponseDto.status,
+      });
+    });
+  }, []);
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    createContest(contest).then(() => {
-      alert("콘테스트 생성에 성공했습니다.");
+
+    updateContest(props.initContestId, contest).then(() => {
+      alert("콘테스트 수정에 성공했습니다.");
       props.setHidden(true);
       props.refresh();
     }).catch((err) => {
       console.log(err);
-      alert("콘테스트 생성에 실패했습니다.");
+      alert("콘테스트 수정에 실패했습니다.");
     });
   }
 
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setContest({
       ...contest,
@@ -78,7 +93,20 @@ function CreateContestModal(props: ModalProps) {
           value={endTime}
           onChange={onChange}
         />
-        <button type="submit">생성</button>
+        <label htmlFor="status">상태</label>
+        <select
+          name="status"
+          id="status"
+          onChange={onChange}
+          value={contest.status}
+        >
+          {
+            ContestStatusArr.map((status) => (
+              <option key={status} value={status}>{status}</option>
+            ))
+          }
+        </select>
+        <button type="submit">수정</button>
         <button
           onClick={() => { props.setHidden(true) }}
         >취소</button>
@@ -87,4 +115,4 @@ function CreateContestModal(props: ModalProps) {
   );
 }
 
-export default CreateContestModal;
+export default UpdateContestModal;

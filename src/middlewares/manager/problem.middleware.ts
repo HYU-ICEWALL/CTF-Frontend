@@ -1,17 +1,16 @@
 import axios from "axios";
 import { config } from "../../config";
-import { CreateProblemDto, ProblemConditions, ProblemPageResponseDto, ProblemResponseDto } from "../../dto/problem.dto";
+import { CreateProblemDto, ProblemConditions, ProblemHeaderResponseDto, ProblemPageResponseDto, ProblemResponseDto } from "../../dto/problem.dto";
 
 const queryString = (conditions: ProblemConditions): string => {
   let queryString = "";
-  conditions.name ? queryString += `&name=${conditions.name}` : null;
-  conditions.domain ? queryString += `&domain=${conditions.domain}` : null;
-  conditions.difficulty ? queryString += `&difficulty=${conditions.difficulty}` : null;
-  conditions.page ? queryString += `&page=${conditions.page}` : null;
-  conditions.limit ? queryString += `&limit=${conditions.limit}` : null;
-  conditions.sort ? queryString += `&sort=${conditions.sort}` : null;
-  conditions.order ? queryString += `&order=${conditions.order}` : null;
-
+  Object.keys(conditions).forEach((key) => {
+    const value = conditions[key as keyof ProblemConditions];
+    if(value) {
+      queryString += `&${key}=${value}`;
+    }
+  });
+  
   return queryString;
 }
 
@@ -19,9 +18,13 @@ export const getProblemWithId = async (id: string): Promise<ProblemResponseDto> 
   return axios.get(`${config.API_URL}/problem/${id}`).then((res) => res.data);
 }
 
-export const getProblemsWithConditions = async (conditions: ProblemConditions): Promise<ProblemPageResponseDto> => {
+export const getProblemPageWithConditions = async (conditions: ProblemConditions): Promise<ProblemPageResponseDto> => {
   const query = queryString(conditions);
   return axios.get(`${config.API_URL}/problem?${query}`).then((res) => res.data);
+}
+
+export const getAllProblems = async (): Promise<ProblemHeaderResponseDto[]> => {
+  return axios.get(`${config.API_URL}/problem/all`).then((res) => res.data);
 }
 
 export const deleteProblem = async (id: string) : Promise<void> => {

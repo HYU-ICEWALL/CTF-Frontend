@@ -60,7 +60,7 @@ function Register() {
           <label htmlFor="confirmPassword">패스워드 확인</label>
           <input
             required
-            type="text"
+            type="password"
             name="confirmPassword"
             id="confirmPassword"
             value={confirmPassword}

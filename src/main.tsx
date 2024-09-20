@@ -3,25 +3,24 @@ import App from "./App.tsx";
 import "./index.css";
 import axios from "axios";
 import { config } from "./config.ts";
-import { refreshToken } from "./middlewares/user/auth.middleware.ts";
 
 axios.defaults.withCredentials = true;
 axios.interceptors.request.use((config) => {
-  console.log(config);
+  // console.log(config);
 
   return config;
 }, (error) => {
-  console.log(error);
+  console.error(error);
   return Promise.reject(error);
 });
 
 axios.interceptors.response.use((config) => {
-  console.log(config);
+  // console.log(config);
 
   return config;
 }, async (error) => {
   const { response } = error;
-  console.log(response);
+  console.error(response);
   
   if (!response) {
     return Promise.reject(error);
